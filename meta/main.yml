@@ -4,7 +4,7 @@ dependencies:
     become: true
 
 galaxy_info:
-  role_name: jenkins-ssl
+  role_name: jenkins_ssl
   author: Erik Lotin
   description: This role installs Docker, NGINX, Jenkins with let's encrypt ssl certificate.
   license: MIT

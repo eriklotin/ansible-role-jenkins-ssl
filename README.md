@@ -1,13 +1,13 @@
-# Ansible role: eriklotin.jenkins-ssl
+# Ansible role: eriklotin.jenkins_ssl
 This role installs docker, nginx proxy, jenkins and let's encrypt certificate.
 
 # Install
 ```
-ansible-galaxy install eriklotin.jenkins-ssl
+ansible-galaxy install eriklotin.jenkins_ssl
 ```
 or install locally:
 ```yaml
-ansible-galaxy install eriklotin.jenkins-ssl -p ./roles/
+ansible-galaxy install eriklotin.jenkins_ssl -p ./roles/
 ```
 
 # Variables
@@ -43,7 +43,7 @@ jenkins_domain_admin_email: 'admin@example.com'
     - jenkins_domain_admin_email: "admin@example.com"
 
   roles:
-    - role: eriklotin.jenkins-ssl
+    - role: eriklotin.jenkins_ssl
 ```
 
 # Dependencies
