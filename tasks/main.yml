@@ -1,0 +1,39 @@
+---
+
+- fail: msg="You must define 'jenkins_domain' variable in your playbook!"
+  when: jenkins_domain is undefined
+
+- fail: msg="You must define 'jenkins_domain_admin_email' variable in your playbook!"
+  when: jenkins_domain_admin_email is undefined
+
+- name: Creates directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    recurse: yes
+  with_items:
+    - "{{ jenkins_workdir }}"
+    - "{{ jenkins_workdir }}/jenkins_home"
+
+- name: Create a Jenkins container
+  docker_container:
+    name: jenkins
+    image: eriklotin/jenkins
+    state: started
+    restart_policy: on-failure
+    restart_retries: 5
+    restart: no
+    volumes:
+      - "{{ jenkins_workdir }}/jenkins_home:/var/jenkins_home"
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    env:
+      VIRTUAL_HOST: "{{ jenkins_domain }}"
+      VIRTUAL_PORT: "{{ 8080 }}"
+      LETSENCRYPT_HOST: "{{ jenkins_domain }}"
+      LETSENCRYPT_EMAIL: "{{ jenkins_domain_admin_email }}"
+  register: jenkins_container_result
+
+- name: Create docker group inside a container and add to it jenkins user
+  shell: "sh {{ jenkins_workdir }}/add-docker-group.sh"
+  when: jenkins_container_result.changed

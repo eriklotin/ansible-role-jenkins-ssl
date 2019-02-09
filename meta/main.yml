@@ -1,0 +1,29 @@
+---
+dependencies:
+  - role: eriklotin.nginx
+    become: true
+
+galaxy_info:
+  role_name: jenkins-ssl
+  author: Erik Lotin
+  description: This role installs Docker, NGINX, Jenkins with let's encrypt ssl certificate.
+  license: MIT
+  min_ansible_version: 2.4
+  platforms:
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+        - bionic
+  galaxy_tags:
+    - jenkins
+    - letsencrypt
+    - nginx
+    - ci
+    - devops
+    - web
+    - docker

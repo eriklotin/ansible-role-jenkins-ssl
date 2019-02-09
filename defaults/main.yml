@@ -1,0 +1,2 @@
+---
+jenkins_workdir: "{{ ansible_env.HOME }}/jenkins"
