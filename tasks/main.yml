@@ -15,6 +15,13 @@
     - "{{ jenkins_workdir }}"
     - "{{ jenkins_workdir }}/jenkins_home"
 
+- name: Upload add-docker-group.sh to host
+  copy:
+    src: "{{ item }}"
+    dest: "{{ jenkins_workdir }}/{{ item }}"
+  with_items:
+    - add-docker-group.sh
+
 - name: Create a Jenkins container
   docker_container:
     name: jenkins
