@@ -1,9 +1,11 @@
 ---
 
-- fail: msg="You must define 'jenkins_domain' variable in your playbook!"
+- name: Check for jenkins_domain variable
+  fail: msg="You must define 'jenkins_domain' variable in your playbook!"
   when: jenkins_domain is undefined
 
-- fail: msg="You must define 'jenkins_domain_admin_email' variable in your playbook!"
+- name: Check for jenkins_domain_admin_email variable
+  fail: msg="You must define 'jenkins_domain_admin_email' variable in your playbook!"
   when: jenkins_domain_admin_email is undefined
 
 - name: Creates directories
