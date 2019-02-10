@@ -15,6 +15,13 @@
     - "{{ jenkins_workdir }}"
     - "{{ jenkins_workdir }}/jenkins_home"
 
+- name: Create symbolic link to jenkins_home
+  become: true
+  file:
+    src: "{{ jenkins_workdir }}/jenkins_home"
+    dest: "/var/jenkins_home"
+    state: link
+
 - name: Upload add-docker-group.sh to host
   copy:
     src: "{{ item }}"
@@ -39,8 +46,6 @@
       VIRTUAL_PORT: "{{ 8080 }}"
       LETSENCRYPT_HOST: "{{ jenkins_domain }}"
       LETSENCRYPT_EMAIL: "{{ jenkins_domain_admin_email }}"
-  register: jenkins_container_result
-
-- name: Create docker group inside a container and add to it jenkins user
-  shell: "sh {{ jenkins_workdir }}/add-docker-group.sh"
-  when: jenkins_container_result.changed
+  notify:
+    - Create docker group inside a container and add to it jenkins user
+    - Restart jenkins container
